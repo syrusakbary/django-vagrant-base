@@ -1,0 +1,27 @@
+{
+	"build_essential": {
+		"compiletime": true
+	},
+	"postgresql": {
+	    "password": {
+	      "postgres": "this_should_be_random" //Randomly generated
+	    }
+	},
+	"project": {
+		"uwsgi_extra": "--processes 1 --py-autoreload 1"
+	},
+	"run_list": [
+		"recipe[apt]",
+		"recipe[build-essential]",
+		"recipe[redisio::install]",
+		"recipe[redisio::enable]",
+		"recipe[database::postgresql]",
+		"recipe[postgresql::server]",
+		"recipe[postgresql::client]",
+		"recipe[nginx]",
+		"recipe[git]",
+		"recipe[python]",
+		"recipe[supervisor]",
+		"recipe[project]"
+	]
+}

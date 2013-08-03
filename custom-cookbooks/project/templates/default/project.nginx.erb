@@ -1,0 +1,16 @@
+server {
+    server_name     <%= @servername %>;
+
+    location / {
+        uwsgi_pass      <%= @socket %>;
+        include         uwsgi_params;
+    }
+}
+
+server {
+    server_name     <%= @static_servername %>;
+    location / {    
+        autoindex on;    
+        root   <%= @static_dir %>;    
+    }
+}

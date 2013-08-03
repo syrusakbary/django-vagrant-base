@@ -1,0 +1,8 @@
+*.DS_Store
+*.lock
+*.pyc
+*.pyo
+cookbooks/*
+.vagrant
+local_settings.py
+tmp/*
