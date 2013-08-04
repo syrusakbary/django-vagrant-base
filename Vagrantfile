@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider :digital_ocean do |provider, override|
     override.ssh.private_key_path = '~/.ssh/id_rsa'
-    override.vm.box = "precise64_fusion"
+    override.vm.box = "digital_ocean"
     override.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
     override.vm.synced_folder '.', '/vagrant', :disabled => true
 
