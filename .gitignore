@@ -2,7 +2,8 @@
 *.lock
 *.pyc
 *.pyo
-cookbooks/*
-.vagrant
+vagrant/cookbooks/*
+vagrant/.vagrant
 local_settings.py
-tmp/*
+vagrant/tmp/*
+src/static/
