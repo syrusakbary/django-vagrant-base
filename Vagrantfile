@@ -7,28 +7,28 @@ Vagrant.configure("2") do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "precise64-vagrant"
+  # config.vm.box = "precise64-vagrant"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+  # config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # config.vm.network :forwarded_port, guest: 80, host: 8080
 
-  config.vm.hostname = "project.local"
+  # config.vm.hostname = "project.local"
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network :private_network, ip: "192.168.33.10"
+  # config.vm.network :private_network, ip: "192.168.33.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
   # config.vm.network :public_network
 
-  config.hostsupdater.aliases = %w(project.local static.project.local)
+  # config.hostsupdater.aliases = %w(project.local static.project.local)
 
   # If true, then any SSH connections made will enable agent forwarding.
   # Default value: false
@@ -51,6 +51,16 @@ Vagrant.configure("2") do |config|
   #   # Use VBoxManage to customize the VM. For example to change memory:
   #   vb.customize ["modifyvm", :id, "--memory", "1024"]
   # end
+
+  config.vm.define :local do |node|
+    node.vm.box = "precise64-vagrant"
+    node.vm.box_url = "http://files.vagrantup.com/precise64.box"
+
+    node.vm.hostname = "project.local"
+    node.vm.network :private_network, ip: "192.168.33.10"
+    node.hostsupdater.aliases = %w(project.local static.project.local)
+  end
+  
   #
   # View the documentation for the provider you're using for more
   # information on available options.
