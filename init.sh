@@ -55,4 +55,4 @@ fi
 
 # Initialize Vagrant VM
 printf "\e[32mSetting up Vagrant\e[0m\n"
-INSTALL_CHEF=1 vagrant up
+vagrant up
