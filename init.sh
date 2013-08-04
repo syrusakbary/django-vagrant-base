@@ -17,6 +17,7 @@ sudo bash -c ''
 printf "\e[32mInstalling vagrant required plugins\e[0m\n"
 vagrant plugin install vagrant-librarian-chef
 vagrant plugin install vagrant-hostsupdater
+vagrant plugin install vagrant-omnibus
 
 # Initialize Vagrant VM
 printf "\e[32mSetting up Vagrant\e[0m\n"
