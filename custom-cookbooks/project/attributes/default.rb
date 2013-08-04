@@ -27,4 +27,4 @@ default['project']['static_servername'] = "static.project.local"
 
 default['project']['database_name'] = "project"
 default['project']['database_user'] = "project"
-default['project']['database_password'] = ""
+default['project']['database_password'] = "test"
