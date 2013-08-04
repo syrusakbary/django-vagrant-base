@@ -52,6 +52,21 @@ Vagrant.configure("2") do |config|
   #   vb.customize ["modifyvm", :id, "--memory", "1024"]
   # end
   #
+
+  config.vm.provider :digital_ocean do |provider, override|
+    override.ssh.private_key_path = '~/.ssh/id_rsa'
+    override.vm.box = "precise64_fusion"
+    override.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
+    override.vm.synced_folder '.', '/vagrant', :disabled => true
+
+    provider.client_id = ENV['DO_CLIENT_ID']
+    provider.api_key = ENV['DO_API_KEY']
+    provider.region = 'Amsterdam 1'
+    provider.size = '512MB'
+    provider.image = 'Ubuntu 12.04 x64'
+    # provider.ssh_key_name = 'Test Key'
+  end
+
   # View the documentation for the provider you're using for more
   # information on available options.
 

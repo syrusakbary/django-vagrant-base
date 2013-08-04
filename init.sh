@@ -33,9 +33,6 @@ vagrant plugin install vagrant-hostsupdater
 vagrant plugin install vagrant-omnibus
 vagrant plugin install vagrant-digitalocean
 
-printf "\e[32mAdd digital_ocean box\e[0m\n"
-vagrant box add digital_ocean https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box
-
 if [[ $platform == 'mac' ]]; then
     if ! foobar_loc="$(type -p brew)" || [ -z "$foobar_loc" ]; then
         printf "\e[31mHomebrew does not appear to be installed on your system.\e[0m\n"
