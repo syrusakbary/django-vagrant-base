@@ -61,13 +61,16 @@ Vagrant.configure("2") do |config|
     node.hostsupdater.aliases = %w(project.local static.project.local)
   end
   
-  #
+
+  config.vm.define :remote do |node|
+    node.vm.hostname = "project.remote"
+    node.vm.synced_folder '.', '/vagrant', :disabled => true
+    node.vm.box = "digital_ocean"
+    node.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
+  end
 
   config.vm.provider :digital_ocean do |provider, override|
     override.ssh.private_key_path = '~/.ssh/id_rsa'
-    override.vm.box = "digital_ocean"
-    override.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
-    override.vm.synced_folder '.', '/vagrant', :disabled => true
 
     provider.client_id = ENV['DO_CLIENT_ID']
     provider.api_key = ENV['DO_API_KEY']
@@ -76,7 +79,6 @@ Vagrant.configure("2") do |config|
     provider.image = 'Ubuntu 12.04 x64'
     # provider.ssh_key_name = 'Test Key'
   end
-
   # View the documentation for the provider you're using for more
   # information on available options.
 
