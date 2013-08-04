@@ -55,10 +55,8 @@ Vagrant.configure("2") do |config|
   # View the documentation for the provider you're using for more
   # information on available options.
 
-  if ENV['INSTALL_CHEF']
-    config.vm.provision :shell, :inline => "wget -q -O - https://www.opscode.com/chef/install.sh | sudo bash"
-  end
-
+  config.omnibus.chef_version = :latest
+  
   # Enable provisioning with Puppet stand alone.  Puppet manifests
   # are contained in a directory path relative to this Vagrantfile.
   # You will need to create the manifests directory and a manifest in
