@@ -18,13 +18,16 @@
 #
 
 default['project']['dir'] = "/opt/project/"
+default['project']['debug'] = false
 default['project']['static_dir'] = "#{node['project']['dir']}/static/"
 default['project']['socket'] = "/tmp/project.sock"
 default['project']['uwsgi_extra'] = ""
 
 default['project']['servername'] = "project.local"
+default['project']['serveralias'] = []
 default['project']['static_servername'] = "static.project.local"
 
 default['project']['database_name'] = "project"
 default['project']['database_user'] = "project"
 default['project']['database_password'] = "test"
+default['project']['database_connection_max_age'] = 3600

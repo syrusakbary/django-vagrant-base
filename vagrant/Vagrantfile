@@ -44,24 +44,58 @@ Vagrant.configure("2") do |config|
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  # config.vm.provider :virtualbox do |vb|
-  #   # Don't boot with headless mode
-  #   vb.gui = true
-  #
-  #   # Use VBoxManage to customize the VM. For example to change memory:
-  #   vb.customize ["modifyvm", :id, "--memory", "1024"]
-  # end
+  config.vm.provider :virtualbox do |vb|
+    # Don't boot with headless mode
+    # vb.gui = true
+  
+    # Use VBoxManage to customize the VM. For example to change memory:
+    vb.customize ["modifyvm", :id, "--memory", "2048"]
+  end
 
   config.vm.define :local do |node|
     node.vm.box = "precise64-vagrant"
     node.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
     node.vm.hostname = "project.local"
-    node.vm.network :private_network, ip: "192.168.33.10"
-    node.hostsupdater.aliases = %w(project.local static.project.local)
+    node.vm.network :private_network, ip: "192.168.33.11"
+    node.hostsupdater.aliases = %w(static.project.local)
+
+    node.vm.provision :chef_solo do |chef|
+      chef.cookbooks_path = ["custom-cookbooks", "cookbooks"]
+
+      # Take chef config from chef-config.json file
+      dna = JSON.parse(File.read("./nodes/local.json"))
+      chef.json.merge!(dna)
+    end
+
   end
   
-  #
+
+  config.vm.define :remote do |node|
+    node.vm.hostname = "project.remote"
+    node.vm.synced_folder '.', '/vagrant', :disabled => true
+    node.vm.box = "digital_ocean"
+    node.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
+
+    node.vm.provision :chef_solo do |chef|
+      chef.cookbooks_path = ["custom-cookbooks", "cookbooks"]
+      # Take chef config from chef-config.json file
+      dna = JSON.parse(File.read("./nodes/remote.json"))
+      chef.json.merge!(dna)
+    end
+
+  end
+
+  config.vm.provider :digital_ocean do |provider, override|
+    override.ssh.private_key_path = '~/.ssh/id_rsa'
+
+    provider.client_id = ENV['DO_CLIENT_ID']
+    provider.api_key = ENV['DO_API_KEY']
+    provider.region = 'Amsterdam 1'
+    provider.size = '512MB'
+    provider.image = 'Ubuntu 12.04 x64'
+    # provider.ssh_key_name = 'Test Key'
+  end
   # View the documentation for the provider you're using for more
   # information on available options.
 
@@ -94,13 +128,13 @@ Vagrant.configure("2") do |config|
   # path, and data_bags path (all relative to this Vagrantfile), and adding
   # some recipes and/or roles.
   #
-  config.vm.provision :chef_solo do |chef|
-    chef.cookbooks_path = ["custom-cookbooks", "cookbooks"]
+  # config.vm.provision :chef_solo do |chef|
+  #   chef.cookbooks_path = ["custom-cookbooks", "cookbooks"]
 
-    # Take chef config from chef-config.json file
-    dna = JSON.parse(File.read("./chef-config.json"))
-    chef.json.merge!(dna)
-  end
+  #   # Take chef config from chef-config.json file
+  #   dna = JSON.parse(File.read("./chef-config.json"))
+  #   chef.json.merge!(dna)
+  # end
 
   # Enable provisioning with chef server, specifying the chef server URL,
   # and the path to the validation key (relative to this Vagrantfile).

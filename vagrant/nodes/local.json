@@ -8,6 +8,10 @@
         }
     },
     "project": {
+        "debug": true,
+        "servername": "project.local",
+        "serveralias": [],
+        "static_servername": "static.project.local",
         "uwsgi_extra": "--processes 1 --py-autoreload 1"
     },
     "run_list": [
@@ -19,9 +23,14 @@
         "recipe[postgresql::server]",
         "recipe[postgresql::client]",
         "recipe[nginx]",
+        // "recipe[java]",
+        // "recipe[elasticsearch]",
+        // "recipe[elasticsearch::plugins]",
         "recipe[git]",
         "recipe[python]",
         "recipe[supervisor]",
+        "recipe[rabbitmq]",
+        // "recipe[imagemagick::devel]",
         "recipe[project]"
     ]
 }

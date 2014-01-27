@@ -15,3 +15,5 @@ DATABASES = {
 STATIC_URL = '/static/'
 
 STATIC_ROOT = ''
+
+DEBUG = True

@@ -156,7 +156,18 @@ LOGGING = {
     }
 }
 
+
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'amqp'
+
+MAIN_HOST = ''
+HOST_SCHEME = 'http://'
+
 try:
     from .local_settings import *
 except ImportError:
     pass
+
+SESSION_COOKIE_DOMAIN = '.%s'%MAIN_HOST
+PARENT_HOST = MAIN_HOST

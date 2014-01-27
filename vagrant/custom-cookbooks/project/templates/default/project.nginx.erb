@@ -1,16 +1,23 @@
+# Main server
 server {
-    server_name     <%= @servername %>;
-
+    listen 80;
+    server_name     <%= @servername %> <%= @serveralias.join(" ") %>;
+    location = /favicon.ico { alias <%= @static_dir %>/images/favicon.ico; }
+    location = /robots.txt { alias <%= @static_dir %>/robots.txt; }
     location / {
         uwsgi_pass      <%= @socket %>;
         include         uwsgi_params;
     }
 }
 
+# Static server
 server {
+    listen 80;
     server_name     <%= @static_servername %>;
     location / {    
-        autoindex on;    
         root   <%= @static_dir %>;    
+        location ~* \.(eot|ttf|woff)$ {
+            add_header Access-Control-Allow-Origin *;
+        }
     }
 }
